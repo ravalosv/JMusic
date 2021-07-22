@@ -16,7 +16,8 @@ using JMusic.WebApi.Helpers;
 
 namespace JMusic.WebApi.Controllers
 {
-    [Authorize(Roles = "Administrador,Vendedor")]
+    //[Authorize(Roles = "Administrador,Vendedor")]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductosController : ControllerBase

@@ -22,6 +22,27 @@ namespace JMusic.WebApi.Services
 
         public string GenerarToken(Usuario usuario)
         {
+            //var jwtSettings = _configuration.GetSection("JwtSettings");
+
+            //string secretKey = jwtSettings.GetValue<string>("SecretKey");
+            //var key = Encoding.ASCII.GetBytes(secretKey);
+
+            //var claims = new ClaimsIdentity();
+            //claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.Username));
+
+            //var tokenDescriptor = new SecurityTokenDescriptor
+            //{
+            //    Subject = claims,
+            //    Expires = DateTime.UtcNow.AddHours(4),
+            //    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            //};
+
+            //var tokenHandler = new JwtSecurityTokenHandler();
+            //var createdToken = tokenHandler.CreateToken(tokenDescriptor);
+
+            //return tokenHandler.WriteToken(createdToken);
+
+            
             //Accedemos a la sección JwtSettings del archivo appsettings.json
             var jwtSettings = _configuration.GetSection("JwtSettings");
             //Obtenemos la clave secreta guardada en JwtSettings:SecretKey
@@ -41,11 +62,11 @@ namespace JMusic.WebApi.Services
             claims.Add(new Claim(ClaimTypes.Name,usuario.Username));
             claims.Add(new Claim(ClaimTypes.Email, usuario.Email));
             claims.Add(new Claim(ClaimTypes.Role, usuario.Perfil.Nombre));
-            
+
 
             // Creamos el objeto JwtSecurityToken
             var token = new JwtSecurityToken(
-              issuer: issuer,             
+              issuer: issuer,
               audience: audience,
               claims: claims,
               notBefore: DateTime.UtcNow,
@@ -53,9 +74,10 @@ namespace JMusic.WebApi.Services
               signingCredentials: new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
             );
 
+
             // Creamos una representación en cadena del Token JWT (Json Web Token)
             return new JwtSecurityTokenHandler().WriteToken(token);
-
+            
         }
 
     }

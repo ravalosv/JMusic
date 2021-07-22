@@ -57,14 +57,19 @@ namespace JMusic.WebApi
             }
 
             app.UseRouting();
+            
             app.UseAuthorization();
+            app.UseAuthentication();
+
+            app.UseCors("CorsPolicy");
+
+            app.UseHttpsRedirection();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
-            app.UseAuthentication();
-            app.UseCors("CorsPolicy");
         }
     }
 }

@@ -72,12 +72,12 @@ namespace JMusic.WebApi.Extensions
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = true,
-                    ValidIssuer = issuer,
-                    ValidateAudience = true,
-                    ValidAudience = audience,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.FromMinutes(minutes)
+                    ValidateIssuer = false,
+                    //ValidIssuer = issuer,
+                    ValidateAudience = false,
+                    //ValidAudience = audience,
+                    ValidateLifetime = false,
+                    //ClockSkew = TimeSpan.FromMinutes(minutes)
                 };
             });
         }
