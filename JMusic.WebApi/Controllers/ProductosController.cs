@@ -11,9 +11,12 @@ using JMusic.Data.Contratos;
 using AutoMapper;
 using JMusic.Dtos;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
+using JMusic.WebApi.Helpers;
 
 namespace JMusic.WebApi.Controllers
 {
+    [Authorize(Roles = "Administrador,Vendedor")]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductosController : ControllerBase
@@ -34,12 +37,16 @@ namespace JMusic.WebApi.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<ProductoDto>>> Get()
+        public async Task<ActionResult<Paginador<ProductoDto>>> Get( int paginaActual=1, int registrosPorPagina = 3)
         {
             try
             {
-                var productos = await _productosRepositorio.ObtenerProductosAsync();
-                return _mapper.Map<List<ProductoDto>>(productos);
+                var resultado = await _productosRepositorio.ObtenerPaginasProductosAsync(paginaActual, registrosPorPagina);
+
+                var listaProductosDto = _mapper.Map<List<ProductoDto>>(resultado.registros);
+
+                return new Paginador<ProductoDto>(listaProductosDto, resultado.totalRegistros, paginaActual, registrosPorPagina);
+
             }
             catch (Exception ex)
             {

@@ -7,11 +7,13 @@ using JMusic.Data.Contratos;
 using JMusic.Dtos;
 using JMusic.Models;
 using JMusic.WebApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JMusic.WebApi.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class SesionController : ControllerBase
